@@ -1,5 +1,5 @@
 CC      ?= gcc
-CFLAGS  := -std=c99 -Wall -Wextra -Werror -O0 -g -Isrc -Itest
+CFLAGS  := -std=c99 -Wall -Wextra -Werror -O0 -g -Isrc -Itest $(EXTRA_CFLAGS)
 SRCS    := src/ring_buffer.c test/test_ring_buffer.c
 BIN     := build/test_ring_buffer
 

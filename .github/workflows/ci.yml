@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: test (${{ matrix.cc }}${{ matrix.sanitize && ', sanitizers' || '' }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cc: [gcc, clang]
+        sanitize: [false, true]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and run unit tests
+        env:
+          CC: ${{ matrix.cc }}
+          EXTRA_CFLAGS: ${{ matrix.sanitize && '-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer' || '' }}
+        run: make test
